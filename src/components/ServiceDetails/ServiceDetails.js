@@ -9,7 +9,7 @@ const ServiceDetails = () => {
     return (
         <div className='w-[90%] mx-auto'>
             <DetailCard service={service}></DetailCard>
-            <ReviewSection></ReviewSection>
+            <ReviewSection service={service} ></ReviewSection>
         </div>
 
     );
