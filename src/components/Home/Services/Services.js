@@ -24,7 +24,7 @@ const Services = () => {
                     ></ServiceCard>)
                 }
             </div>
-            <Link className='text-center my-2 flex items-center text-green-900 font-bold text-xl'>See More <FaArrowRight className='ml-2'></FaArrowRight> </Link>
+            <Link to={'/services'} className='text-center my-2 flex items-center text-green-900 font-bold text-xl'>See All <FaArrowRight className='ml-2'></FaArrowRight> </Link>
         </div>
     );
 };
