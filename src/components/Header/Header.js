@@ -8,7 +8,7 @@ const Header = () => {
 
     const menu = <>
         <NavLink to="/" className={'btn btn-ghost'}>Home</NavLink>
-        <NavLink className={'btn btn-ghost'}>Producrs</NavLink>
+        <NavLink to={'/services'} className={'btn btn-ghost'}>Services</NavLink>
         <NavLink className={'btn btn-ghost'}>Orders</NavLink>
     </>
 
