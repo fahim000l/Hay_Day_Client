@@ -8,10 +8,10 @@ const ServiceCard = ({ service }) => {
     return (
         <div className='border-gray-200 shadow-lg shadow-green-500 border-2 border-solid rounded-lg'>
             <div>
-                <img className='w-full h-[300px] rounded-lg' src={thumbnail} alt="" />
+                <img className='w-full lg:h-[300px] h-[500px] rounded-lg' src={thumbnail} alt="" />
             </div>
             <div className='text-start p-5'>
-                <h3 className='font-bold text-2xl truncate'>{name}</h3>
+                <h3 className='font-bold text-2xl truncate text-green-900'>{name}</h3>
                 <p>{details.length > 100 ? details.slice(0, 100) + '...' : details}</p>
                 <p className='my-5'>Price : $ <span className='text-yellow-900 font-bold'>{price}</span></p>
                 <div className='flex items-center'>
