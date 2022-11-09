@@ -22,6 +22,7 @@ const ReviewSection = ({ service }) => {
         const image = user?.photoURL;
         const name = user?.displayName;
         const serviceId = service._id;
+        const serviceName = service.name
         const text = form.review.value;
         console.log(email, name, serviceId, text, image, rating);
 
@@ -31,7 +32,8 @@ const ReviewSection = ({ service }) => {
             name,
             serviceId,
             text,
-            rating
+            rating,
+            serviceName
         }
 
         fetch(`http://localhost:5000/servicereviews/${service._id}`, {

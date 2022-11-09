@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
 import { AuthContext } from '../../contexts/AuthProvider';
 import ReviewRow from '../ServiceDetails/ReviewSection/ReviewRow/ReviewRow';
 
@@ -7,6 +8,7 @@ const MyReviews = () => {
 
     const { user } = useContext(AuthContext);
     const [reviews, setReviews] = useState([]);
+    const [reviewUpdating, setReviewUpdating] = useState();
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -34,10 +36,45 @@ const MyReviews = () => {
 
     const handleAllDelete = () => {
         const confirmation = window.confirm('Are you sure? You want to delete all of your reviews!');
-        console.log(confirmation);
-        // fetch(`http://localhost:5000/reviews?email=${user?.email}`, {
 
-        // })
+        if (confirmation) {
+            fetch(`http://localhost:5000/reviews?email=${user?.email}`, {
+                method: 'DELETE'
+            })
+                .then(res => res.json())
+                .then(data => {
+                    console.log(data);
+                    if (data.deletedCount > 0) {
+                        setReviews([]);
+                        Swal.fire('All your reviews has been removed');
+                    }
+                })
+        }
+    }
+
+    const handleUpdate = (_id) => {
+        const updatingtext = window.prompt('Update review text');
+        if (updatingtext) {
+            // setReviewUpdating(text)
+            let updatingReview = reviews.find(rev => rev._id === _id);
+            updatingReview.text = updatingtext;
+            fetch(`http://localhost:5000/reviews/${_id}`, {
+                method: 'PUT',
+                headers: {
+                    'content-type': 'application/json'
+                },
+                body: JSON.stringify(updatingReview)
+            })
+                .then(res => res.json())
+                .then(data => {
+                    console.log(data);
+                    if (data.modifiedCount > 0) {
+                        const updatedReview = reviews.find(rev => rev._id === _id);
+                        const remainingReviews = reviews.filter(revs => revs._id !== _id);
+                        setReviews([updatedReview, ...remainingReviews])
+                    }
+                })
+        }
     }
 
     if (reviews.length === 0) {
@@ -65,7 +102,9 @@ const MyReviews = () => {
                             <th>Name</th>
                             <th>Text</th>
                             <th>Rating</th>
+                            <th>serviceName</th>
                             <th>Date</th>
+                            <th>Update</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -74,6 +113,7 @@ const MyReviews = () => {
                                 key={review._id}
                                 review={review}
                                 handleSingleDelete={handleSingleDelete}
+                                handleUpdate={handleUpdate}
                             ></ReviewRow>)
                         }
                     </tbody>

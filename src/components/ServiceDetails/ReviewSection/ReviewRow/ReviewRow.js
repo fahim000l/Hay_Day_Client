@@ -2,11 +2,11 @@ import React from 'react';
 import { FaUserAlt } from 'react-icons/fa';
 import { useLocation } from 'react-router-dom';
 
-const ReviewRow = ({ review, handleSingleDelete }) => {
+const ReviewRow = ({ review, handleSingleDelete, handleUpdate }) => {
 
     const location = useLocation();
 
-    const { email, image, name, rating, serviceId, text, _id } = review;
+    const { email, image, name, rating, serviceId, text, _id, serviceName } = review;
 
 
 
@@ -41,8 +41,14 @@ const ReviewRow = ({ review, handleSingleDelete }) => {
                 {text}
             </td>
             <td>{rating}</td>
+            <td className={`${location.pathname === '/myreviews' ? 'block' : 'hidden'}`}>
+                {serviceName}
+            </td>
             <th>
-                <button className="btn btn-ghost btn-xs">details</button>
+                <button className="btn btn-ghost btn-xs">date</button>
+            </th>
+            <th className={`${location.pathname === '/myreviews' ? 'block' : 'hidden'}`}>
+                <button onClick={() => handleUpdate(_id)} className="btn btn-ghost btn-xs">Update</button>
             </th>
         </tr>
     );
