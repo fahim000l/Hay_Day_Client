@@ -2,7 +2,7 @@ import React from 'react';
 
 const ReviewRow = ({ review }) => {
 
-    console.log(review);
+
     const { email, image, name, rating, serviceId, text, _id } = review
 
     return (

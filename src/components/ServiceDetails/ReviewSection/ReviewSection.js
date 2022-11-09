@@ -13,7 +13,7 @@ const ReviewSection = ({ service }) => {
         fetch(`http://localhost:5000/servicereviews/${service._id}`)
             .then(res => res.json())
             .then(data => setReviews(data))
-    }, [service._id]);
+    }, [service._id, reviews]);
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -30,7 +30,8 @@ const ReviewSection = ({ service }) => {
             image,
             name,
             serviceId,
-            text
+            text,
+            rating
         }
 
         fetch(`http://localhost:5000/servicereviews/${service._id}`, {
@@ -40,6 +41,14 @@ const ReviewSection = ({ service }) => {
             },
             body: JSON.stringify(review)
         })
+            .then(res => res.json())
+            .then(data => {
+                console.log(data);
+                if (data.acknowledged) {
+                    setReviews([...reviews, data])
+                }
+                form.reset();
+            })
     }
 
     const handleRating = (event) => {
