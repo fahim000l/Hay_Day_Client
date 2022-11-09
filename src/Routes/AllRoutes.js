@@ -6,6 +6,7 @@ import ServiceDetails from "../components/ServiceDetails/ServiceDetails";
 import SignIn from "../components/SignIn/SignIn";
 import SignUp from "../components/SignUp/SignUp";
 import Main from "../LayOuts/Main/Main";
+import PrivateRoute from "./PrivateRoute";
 
 export const router = createBrowserRouter([
     {
@@ -28,7 +29,7 @@ export const router = createBrowserRouter([
             },
             {
                 path: '/myreviews',
-                element: <MyReviews></MyReviews>
+                element: <PrivateRoute><MyReviews></MyReviews></PrivateRoute>
             },
             {
                 path: '/signin',

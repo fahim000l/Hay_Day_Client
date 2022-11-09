@@ -1,5 +1,6 @@
 import React, { useContext, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
 import authImage from '../../assets/authImage.jfif'
 import { AuthContext } from '../../contexts/AuthProvider';
 
@@ -7,6 +8,10 @@ const SignUp = () => {
 
     const { signUp, setProfile } = useContext(AuthContext);
     const [error, setError] = useState('');
+    const location = useLocation();
+    const navigate = useNavigate();
+
+    const from = location.state?.from?.pathname || '/';
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -26,7 +31,10 @@ const SignUp = () => {
             .then(result => {
                 const user = result.user;
                 console.log(user);
-                setUserProfile(name, photoUrl)
+                setUserProfile(name, photoUrl);
+                Swal.fire('Your Account has been created');
+                navigate(from, { replace: true })
+                form.reset();
             })
             .catch(error => {
                 console.error(error);

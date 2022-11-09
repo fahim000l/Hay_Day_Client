@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react';
 import { FaFacebook, FaGithub, FaGoogle } from 'react-icons/fa';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import authImage from '../../assets/authImage.jfif'
 import { AuthContext } from '../../contexts/AuthProvider';
@@ -10,6 +10,10 @@ const SignIn = () => {
     const { signIn, googleSignIn, fbSignIn, gitSignIn, resetPassword } = useContext(AuthContext);
     const [error, setError] = useState('');
     const [userEmail, setUserEmail] = useState();
+    const location = useLocation();
+    const navigate = useNavigate();
+
+    const from = location.state?.from?.pathname || '/'
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -24,6 +28,8 @@ const SignIn = () => {
             .then(result => {
                 const user = result.user;
                 console.log(user);
+                form.reset();
+                navigate(from, { replace: true });
             })
             .catch(error => {
                 console.error(error.message);
@@ -42,6 +48,7 @@ const SignIn = () => {
             .then(result => {
                 const user = result.user;
                 console.log(user);
+                navigate(from, { replace: true });
             })
             .catch(error => {
                 console.error(error);
@@ -53,6 +60,7 @@ const SignIn = () => {
             .then(result => {
                 const user = result.user;
                 console.log(user);
+                navigate(from, { replace: true });
             })
             .catch(error => {
                 console.error(error);
@@ -64,6 +72,7 @@ const SignIn = () => {
             .then(result => {
                 const user = result.user;
                 console.log(user);
+                navigate(from, { replace: true });
             })
             .catch(error => {
                 console.error(error)
