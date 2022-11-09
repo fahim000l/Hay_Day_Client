@@ -18,6 +18,28 @@ const MyReviews = () => {
             })
     }, [user?.email])
 
+    const handleSingleDelete = (_id) => {
+        fetch(`http://localhost:5000/reviews/${_id}`, {
+            method: 'DELETE'
+        })
+            .then(res => res.json())
+            .then(data => {
+                console.log(data);
+                if (data.deletedCount > 0) {
+                    const remaining = reviews.filter(revs => revs._id !== _id);
+                    setReviews(remaining);
+                }
+            })
+    };
+
+    const handleAllDelete = () => {
+        const confirmation = window.confirm('Are you sure? You want to delete all of your reviews!');
+        console.log(confirmation);
+        // fetch(`http://localhost:5000/reviews?email=${user?.email}`, {
+
+        // })
+    }
+
     if (reviews.length === 0) {
         return (
             <div className='my-96'>
@@ -35,7 +57,7 @@ const MyReviews = () => {
                         <tr>
                             <th>
                                 <label>
-                                    <button className="btn btn-square">
+                                    <button onClick={handleAllDelete} className="btn btn-square">
                                         <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" /></svg>
                                     </button>
                                 </label>
@@ -51,6 +73,7 @@ const MyReviews = () => {
                             reviews.map(review => <ReviewRow
                                 key={review._id}
                                 review={review}
+                                handleSingleDelete={handleSingleDelete}
                             ></ReviewRow>)
                         }
                     </tbody>
