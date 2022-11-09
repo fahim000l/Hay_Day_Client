@@ -19,15 +19,27 @@ const ReviewSection = ({ service }) => {
         event.preventDefault();
         const form = event.target;
         const email = user?.email;
+        const image = user?.photoURL;
         const name = user?.displayName;
         const serviceId = service._id;
-        const review = form.review.value;
-        const rate = rating
+        const text = form.review.value;
+        console.log(email, name, serviceId, text, image, rating);
 
+        const review = {
+            email,
+            image,
+            name,
+            serviceId,
+            text
+        }
 
-
-
-        console.log(email, name, serviceId, review, rate);
+        fetch(`http://localhost:5000/servicereviews/${service._id}`, {
+            method: 'POST',
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify(review)
+        })
     }
 
     const handleRating = (event) => {
