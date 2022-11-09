@@ -1,8 +1,58 @@
-import React from 'react';
+import React, { useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
 import authImage from '../../assets/authImage.jfif'
+import { AuthContext } from '../../contexts/AuthProvider';
 
 const SignUp = () => {
+
+    const { signUp, setProfile } = useContext(AuthContext);
+    const [error, setError] = useState('');
+
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        setError('');
+        const form = event.target;
+        const name = form.name.value;
+        const photoUrl = form.photoUrl.value;
+        const email = form.email.value;
+        const password = form.password.value;
+        console.log(name, photoUrl, email, password);
+
+        if (password.length < 6) {
+            setError('Password must contain at least 6 charactes');
+        }
+
+        signUp(email, password)
+            .then(result => {
+                const user = result.user;
+                console.log(user);
+                setUserProfile(name, photoUrl)
+            })
+            .catch(error => {
+                console.error(error);
+                if (error.message === 'Firebase: Error (auth/email-already-in-use).') {
+
+                    setError('This user already exists');
+                }
+            })
+    }
+
+    const setUserProfile = (name, photoUrl) => {
+
+        const profile = {
+            displayName: name,
+            photoURL: photoUrl
+        }
+        setProfile(profile)
+            .then(result => {
+                const user = result.user;
+                console.log(user);
+            })
+            .catch(error => {
+                console.error(error);
+            })
+    }
+
     return (
         <div className='flex lg:flex-row flex-col'>
             <div className='lg:w-[50%] lg:h-full h-[500px] lg:p-0 p-10 px-20 rounded-lg'>
@@ -14,7 +64,7 @@ const SignUp = () => {
                         <h1 className="my-3 text-4xl font-bold text-green-900">Sign Up</h1>
                         <p className="text-sm text-green-400 font-bold">Sign Up to create account</p>
                     </div>
-                    <form className="space-y-12 ng-untouched ng-pristine ng-valid">
+                    <form onSubmit={handleSubmit}>
                         <div className="space-y-4">
                             <div>
                                 <label htmlFor="name" className="block mb-2 text-start font-bold text-green-900">User Name</label>
@@ -33,9 +83,10 @@ const SignUp = () => {
                                 <input type="password" name="password" id="password" placeholder="*****" className="w-full px-3 py-2 border rounded-md border-green-900 border-5 text-green-900 font-bold border-solid" required />
                             </div>
                         </div>
-                        <div className="space-y-2">
+                        <div className="space-y-2 mt-5">
+                            <p className='text-red-800 font-bold'>{error}</p>
                             <div>
-                                <button type="button" className="btn btn-primary bg-green-500 w-full">Sign Up</button>
+                                <button type="submit" className="btn btn-primary bg-green-500 w-full">Sign Up</button>
                             </div>
                             <p className="text-center text-green-900 text-xl font-bold">Already have an account yet?
                                 <Link to={'/signin'} className="hover:underline text-blue-900">Sign In</Link>.

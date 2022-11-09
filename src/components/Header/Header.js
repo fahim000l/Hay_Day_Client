@@ -1,16 +1,28 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { NavLink } from 'react-router-dom';
 import logo from '../../assets/symbol-hay-day-supercell-crop-logo-removebg-preview.png'
+import { AuthContext } from '../../contexts/AuthProvider';
 
 
 const Header = () => {
 
+    const { user } = useContext(AuthContext);
 
     const menu = <>
         <NavLink to="/" className={'btn btn-ghost'}>Home</NavLink>
         <NavLink to={'/services'} className={'btn btn-ghost'}>Services</NavLink>
-        <NavLink className={'btn btn-ghost'}>Orders</NavLink>
+        {
+            user?.uid ?
+                <NavLink className={'btn btn-ghost'}>My Reviews</NavLink>
+                :
+                <NavLink className="btn btn-outline btn-success text-black">Sign In</NavLink>
+        }
+
     </>
+
+    // const user = <>
+    //     <
+    // </>
 
     return (
         <div className="navbar px-[20px] bg-green-200">
