@@ -36,6 +36,7 @@ const MyReviews = () => {
                 if (data.deletedCount > 0) {
                     const remaining = reviews.filter(revs => revs._id !== _id);
                     setReviews(remaining);
+                    Swal.fire('The review has been deleted');
                 }
             })
     };

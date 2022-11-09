@@ -24,6 +24,7 @@ const Header = () => {
             user?.uid ?
                 <>
                     <NavLink to={'/myreviews'} className={'btn btn-ghost font-bold'}>My Reviews</NavLink>
+                    <NavLink to={'/addservice'} className={'btn btn-ghost font-bold'}>Add Service</NavLink>
                     <button onClick={handleSignOut} className={'btn btn-success text-black font-bold'}>Sign Out</button>
                 </>
                 :
