@@ -1,4 +1,5 @@
 import React, { useContext } from 'react';
+import { FaUserAlt } from 'react-icons/fa';
 import { NavLink } from 'react-router-dom';
 import logo from '../../assets/symbol-hay-day-supercell-crop-logo-removebg-preview.png'
 import { AuthContext } from '../../contexts/AuthProvider';
@@ -6,23 +7,30 @@ import { AuthContext } from '../../contexts/AuthProvider';
 
 const Header = () => {
 
-    const { user } = useContext(AuthContext);
+    const { user, logOut } = useContext(AuthContext);
+
+    const handleSignOut = () => {
+        logOut()
+            .then(() => { })
+            .catch(error => {
+                console.error(error);
+            })
+    }
 
     const menu = <>
-        <NavLink to="/" className={'btn btn-ghost'}>Home</NavLink>
-        <NavLink to={'/services'} className={'btn btn-ghost'}>Services</NavLink>
+        <NavLink to="/" className={'btn btn-ghost font-bold'}>Home</NavLink>
+        <NavLink to={'/services'} className={'btn btn-ghost font-bold'}>Services</NavLink>
         {
             user?.uid ?
-                <NavLink className={'btn btn-ghost'}>My Reviews</NavLink>
+                <>
+                    <NavLink className={'btn btn-ghost font-bold'}>My Reviews</NavLink>
+                    <button onClick={handleSignOut} className={'btn btn-success text-black font-bold'}>Sign Out</button>
+                </>
                 :
-                <NavLink className="btn btn-outline btn-success text-black">Sign In</NavLink>
+                <NavLink to={'/signin'} className="btn btn-success text-black font-bold">Sign In</NavLink>
         }
 
     </>
-
-    // const user = <>
-    //     <
-    // </>
 
     return (
         <div className="navbar px-[20px] bg-green-200">
@@ -37,11 +45,23 @@ const Header = () => {
                 </div>
                 <NavLink to={'/'} className="w-[100px] h-[100px]"><img src={logo} alt="" /></NavLink>
             </div>
-            <div className="navbar-center hidden lg:flex">
+            <div className="navbar-center hidden lg:flex items-center justify-evenly">
                 <ul className="menu menu-horizontal p-0">
                     {menu}
                 </ul>
             </div>
+            {
+                user?.uid &&
+                <div className="navbar-end">
+                    <p className='text-xl font-bold'>{user.displayName}</p>
+                    {
+                        user?.photoURL ?
+                            <img className='mx-2 w-[60px] border-black border-solid border-2 h-[60px] rounded-full' src="" alt="" />
+                            :
+                            <FaUserAlt className='mx-2 border-black border-solid border-2 p-2 w-[60px] h-[60px] rounded-full'></FaUserAlt>
+                    }
+                </div>
+            }
         </div>
     );
 };

@@ -1,5 +1,5 @@
-import React, { createContext, useState } from 'react';
-import { createUserWithEmailAndPassword, FacebookAuthProvider, getAuth, GithubAuthProvider, GoogleAuthProvider, sendPasswordResetEmail, signInWithEmailAndPassword, signInWithPopup, updateProfile } from 'firebase/auth'
+import React, { createContext, useEffect, useState } from 'react';
+import { createUserWithEmailAndPassword, FacebookAuthProvider, getAuth, GithubAuthProvider, GoogleAuthProvider, onAuthStateChanged, sendPasswordResetEmail, signInWithEmailAndPassword, signInWithPopup, signOut, updateProfile } from 'firebase/auth'
 import app from '../firebase/firebase.init';
 import { resolveTo } from '@remix-run/router';
 
@@ -44,7 +44,23 @@ const AuthProvider = ({ children }) => {
     const resetPassword = (email) => {
         setLoader(true);
         return sendPasswordResetEmail(auth, email);
+    };
+    const logOut = () => {
+        setLoader(true);
+        return signOut(auth);
     }
+
+    useEffect(() => {
+        const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+            setUser(currentUser);
+            setLoader(false);
+        })
+
+        return () => {
+            unsubscribe();
+        }
+
+    }, [])
 
     const authInfo = {
         user,
@@ -54,7 +70,8 @@ const AuthProvider = ({ children }) => {
         fbSignIn,
         gitSignIn,
         setProfile,
-        resetPassword
+        resetPassword,
+        logOut
     }
 
     return (

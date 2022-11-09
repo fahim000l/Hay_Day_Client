@@ -1,9 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
+import { FaUserAlt } from 'react-icons/fa';
+import { AuthContext } from '../../../contexts/AuthProvider';
 import ReviewRow from './ReviewRow/ReviewRow';
 
 const ReviewSection = ({ service }) => {
 
+    const { user } = useContext(AuthContext);
     const [reviews, setReviews] = useState([]);
+    const [rating, setRating] = useState(1)
 
     useEffect(() => {
         fetch(`http://localhost:5000/servicereviews/${service._id}`)
@@ -13,6 +17,37 @@ const ReviewSection = ({ service }) => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
+        const form = event.target;
+        const email = user?.email;
+        const name = user?.displayName;
+        const serviceId = service._id;
+        const review = form.review.value;
+        const rate = rating
+
+
+
+
+        console.log(email, name, serviceId, review, rate);
+    }
+
+    const handleRating = (event) => {
+
+        if (event.target.name === 'rating1') {
+            setRating(1);
+        }
+        else if (event.target.name === 'rating2') {
+            setRating(2);
+        }
+        else if (event.target.name === 'rating3') {
+            setRating(3)
+        }
+        else if (event.target.name === 'rating4') {
+            setRating(4);
+        }
+        else {
+            setRating(5);
+        }
+
     }
 
     return (
@@ -40,14 +75,25 @@ const ReviewSection = ({ service }) => {
             </div>
             <form onSubmit={handleSubmit}>
                 <div className='flex items-center justify-between mt-5'>
-                    <img className='w-[60px] h-[60px] rounded-full' src={service.thumbnail} alt="" />
+                    {
+                        user?.photoURL ?
+                            <img className='w-[60px] h-[60px] rounded-full' src={user?.photoURL} alt="" />
+                            :
+                            <FaUserAlt className='w-[60px] h-[60px] rounded-full'></FaUserAlt>
+                    }
                     <div className="form-control w-[80%]">
                         <label className="label">
-                            <span className="label-text font-bold">Md Fahim Faisal</span>
+                            {
+                                user?.displayName &&
+                                <span className="label-text font-bold">{user?.displayName}</span>
+                            }
                         </label>
-                        <input name='text' type="text" placeholder="Type here" className="input input-bordered border-green-900 shadow-green-900 shadow-lg" />
+                        <input name='review' type="text" placeholder="Type here" className="input input-bordered border-green-900 shadow-green-900 shadow-lg" required />
                         <label className="label">
-                            <span className="label-text-alt font-bold">mdfahimfaisal000@gmail.com</span>
+                            {
+                                user?.email &&
+                                <span className="label-text-alt font-bold">{user.email}</span>
+                            }
                         </label>
                     </div>
                     <button className='btn btn-primary bg-green-500' type="submit">Add Review</button>
@@ -55,11 +101,11 @@ const ReviewSection = ({ service }) => {
                 <div className='flex items-center justify-center mb-10'>
                     <p className='text-green-900 text-3xl font-bold'>Rate this service : </p>
                     <div className="rating mx-5">
-                        <input type="radio" name="rating-2" className={`mask mask-star-2 bg-orange-400`} />
-                        <input type="radio" name="rating-2" className={`mask mask-star-2 bg-orange-400`} />
-                        <input type="radio" name="rating-2" className={`mask mask-star-2 bg-orange-400`} />
-                        <input type="radio" name="rating-2" className={`mask mask-star-2 bg-orange-400`} />
-                        <input type="radio" name="rating-2" className={`mask mask-star-2 bg-orange-400`} />
+                        <input type="radio" onChange={handleRating} checked={rating === 1} name="rating1" className={`mask mask-star-2 bg-orange-400`} />
+                        <input type="radio" onChange={handleRating} checked={rating === 2} name="rating2" className={`mask mask-star-2 bg-orange-400`} />
+                        <input type="radio" onChange={handleRating} checked={rating === 3} name="rating3" className={`mask mask-star-2 bg-orange-400`} />
+                        <input type="radio" onChange={handleRating} checked={rating === 4} name="rating4" className={`mask mask-star-2 bg-orange-400`} />
+                        <input type="radio" onChange={handleRating} checked={rating === 5} name="rating5" className={`mask mask-star-2 bg-orange-400`} />
                     </div>
                 </div>
             </form>
