@@ -23,7 +23,7 @@ const Header = () => {
         {
             user?.uid ?
                 <>
-                    <NavLink className={'btn btn-ghost font-bold'}>My Reviews</NavLink>
+                    <NavLink to={'/myreviews'} className={'btn btn-ghost font-bold'}>My Reviews</NavLink>
                     <button onClick={handleSignOut} className={'btn btn-success text-black font-bold'}>Sign Out</button>
                 </>
                 :

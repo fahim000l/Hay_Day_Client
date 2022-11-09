@@ -1,4 +1,5 @@
 import React from 'react';
+import { FaUserAlt } from 'react-icons/fa';
 
 const ReviewRow = ({ review }) => {
 
@@ -11,7 +12,12 @@ const ReviewRow = ({ review }) => {
                 <div className="flex items-center space-x-3">
                     <div className="avatar">
                         <div className="mask mask-squircle w-12 h-12">
-                            <img src={image} alt="Avatar Tailwind CSS Component" />
+                            {
+                                image ?
+                                    <img src={image} alt="Avatar Tailwind CSS Component" />
+                                    :
+                                    <FaUserAlt></FaUserAlt>
+                            }
                         </div>
                     </div>
                     <div>
