@@ -8,11 +8,14 @@ const MyReviews = () => {
 
     const { user } = useContext(AuthContext);
     const [reviews, setReviews] = useState([]);
-    const [reviewUpdating, setReviewUpdating] = useState();
     const navigate = useNavigate();
 
     useEffect(() => {
-        fetch(`http://localhost:5000/reviews?email=${user?.email}`)
+        fetch(`http://localhost:5000/reviews?email=${user?.email}`, {
+            headers: {
+                authorization: `Bearer ${localStorage.getItem('haydaytoken')}`
+            }
+        })
             .then(res => res.json())
             .then(data => {
                 console.log(data);
@@ -22,7 +25,10 @@ const MyReviews = () => {
 
     const handleSingleDelete = (_id) => {
         fetch(`http://localhost:5000/reviews/${_id}`, {
-            method: 'DELETE'
+            method: 'DELETE',
+            headers: {
+                authorization: `Bearer ${localStorage.getItem('haydaytoken')}`
+            }
         })
             .then(res => res.json())
             .then(data => {
@@ -39,7 +45,10 @@ const MyReviews = () => {
 
         if (confirmation) {
             fetch(`http://localhost:5000/reviews?email=${user?.email}`, {
-                method: 'DELETE'
+                method: 'DELETE',
+                headers: {
+                    authorization: `Bearer ${localStorage.getItem('haydaytoken')}`
+                }
             })
                 .then(res => res.json())
                 .then(data => {
@@ -61,7 +70,8 @@ const MyReviews = () => {
             fetch(`http://localhost:5000/reviews/${_id}`, {
                 method: 'PUT',
                 headers: {
-                    'content-type': 'application/json'
+                    'content-type': 'application/json',
+                    authorization: `Bearer ${localStorage.getItem('haydaytoken')}`
                 },
                 body: JSON.stringify(updatingReview)
             })

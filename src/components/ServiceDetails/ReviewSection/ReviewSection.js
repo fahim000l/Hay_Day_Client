@@ -1,5 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { FaUserAlt } from 'react-icons/fa';
+import { useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
 import { AuthContext } from '../../../contexts/AuthProvider';
 import ReviewRow from './ReviewRow/ReviewRow';
 
@@ -7,7 +9,8 @@ const ReviewSection = ({ service }) => {
 
     const { user } = useContext(AuthContext);
     const [reviews, setReviews] = useState([]);
-    const [rating, setRating] = useState(1)
+    const [rating, setRating] = useState(1);
+    const navigate = useNavigate();
 
     useEffect(() => {
         fetch(`http://localhost:5000/servicereviews/${service._id}`)
@@ -16,6 +19,13 @@ const ReviewSection = ({ service }) => {
     }, [service._id, reviews]);
 
     const handleSubmit = (event) => {
+
+        if (!user?.uid) {
+            Swal.fire('Please Sign In to add review');
+            navigate('/signin');
+            return;
+        }
+
         event.preventDefault();
         const form = event.target;
         const email = user?.email;

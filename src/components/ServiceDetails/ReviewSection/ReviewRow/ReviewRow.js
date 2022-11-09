@@ -6,9 +6,7 @@ const ReviewRow = ({ review, handleSingleDelete, handleUpdate }) => {
 
     const location = useLocation();
 
-    const { email, image, name, rating, serviceId, text, _id, serviceName } = review;
-
-
+    const { email, image, name, rating, text, _id, serviceName } = review;
 
     return (
         <tr>

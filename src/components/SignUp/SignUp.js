@@ -3,10 +3,12 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import authImage from '../../assets/authImage.jfif'
 import { AuthContext } from '../../contexts/AuthProvider';
+import { JwtContext } from '../../contexts/JWT';
 
 const SignUp = () => {
 
     const { signUp, setProfile } = useContext(AuthContext);
+    const { jwtManager } = useContext(JwtContext);
     const [error, setError] = useState('');
     const location = useLocation();
     const navigate = useNavigate();
@@ -31,6 +33,7 @@ const SignUp = () => {
             .then(result => {
                 const user = result.user;
                 console.log(user);
+                jwtManager(user)
                 setUserProfile(name, photoUrl);
                 Swal.fire('Your Account has been created');
                 navigate(from, { replace: true })

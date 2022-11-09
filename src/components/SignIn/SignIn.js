@@ -4,10 +4,13 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import authImage from '../../assets/authImage.jfif'
 import { AuthContext } from '../../contexts/AuthProvider';
-// max-w-md
+import { JwtContext } from '../../contexts/JWT';
+
+
 const SignIn = () => {
 
     const { signIn, googleSignIn, fbSignIn, gitSignIn, resetPassword } = useContext(AuthContext);
+    const { jwtManager } = useContext(JwtContext)
     const [error, setError] = useState('');
     const [userEmail, setUserEmail] = useState();
     const location = useLocation();
@@ -28,6 +31,7 @@ const SignIn = () => {
             .then(result => {
                 const user = result.user;
                 console.log(user);
+                jwtManager(user);
                 form.reset();
                 navigate(from, { replace: true });
             })
@@ -48,6 +52,7 @@ const SignIn = () => {
             .then(result => {
                 const user = result.user;
                 console.log(user);
+                jwtManager(user);
                 navigate(from, { replace: true });
             })
             .catch(error => {
@@ -60,6 +65,7 @@ const SignIn = () => {
             .then(result => {
                 const user = result.user;
                 console.log(user);
+                jwtManager(user);
                 navigate(from, { replace: true });
             })
             .catch(error => {
@@ -72,6 +78,7 @@ const SignIn = () => {
             .then(result => {
                 const user = result.user;
                 console.log(user);
+                jwtManager(user);
                 navigate(from, { replace: true });
             })
             .catch(error => {
