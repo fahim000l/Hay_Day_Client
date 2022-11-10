@@ -1,6 +1,8 @@
 import React from 'react';
+import { useTitle } from 'react-use';
 
 const Blog = () => {
+    useTitle(`${document.title}-Blogs`)
     return (
         <div className='grid lg:grid-cols-2 grid-cols-1'>
             <div className="hero bg-base-200 p-5">

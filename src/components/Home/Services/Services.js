@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { FaArrowRight } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
+import { useTitle } from 'react-use';
 import ServiceCard from '../../Shared/ServiceCard/ServiceCard';
 
 const Services = () => {
-
+    useTitle(`${document.title}-services`)
     const [services, setServices] = useState([]);
 
     useEffect(() => {
-        fetch('http://localhost:5000/services?quantity=3')
+        fetch('https://hayday-server.vercel.app/services?quantity=3')
             .then(res => res.json())
             .then(data => setServices(data))
     }, [])

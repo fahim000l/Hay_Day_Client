@@ -1,11 +1,13 @@
 import React, { useContext, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { useTitle } from 'react-use';
 import Swal from 'sweetalert2';
 import authImage from '../../assets/authImage.jfif'
 import { AuthContext } from '../../contexts/AuthProvider';
 import { JwtContext } from '../../contexts/JWT';
 
 const SignUp = () => {
+    useTitle(`${document.title}-SignUp`)
 
     const { signUp, setProfile } = useContext(AuthContext);
     const { jwtManager } = useContext(JwtContext);

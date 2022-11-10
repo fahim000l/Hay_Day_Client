@@ -1,6 +1,7 @@
 import React, { useContext, useState } from 'react';
 import { FaFacebook, FaGithub, FaGoogle } from 'react-icons/fa';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { useTitle } from 'react-use';
 import Swal from 'sweetalert2';
 import authImage from '../../assets/authImage.jfif'
 import { AuthContext } from '../../contexts/AuthProvider';
@@ -8,6 +9,7 @@ import { JwtContext } from '../../contexts/JWT';
 
 
 const SignIn = () => {
+    useTitle(`${document.title}-SignIn`)
 
     const { signIn, googleSignIn, fbSignIn, gitSignIn, resetPassword } = useContext(AuthContext);
     const { jwtManager } = useContext(JwtContext)

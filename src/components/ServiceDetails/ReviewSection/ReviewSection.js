@@ -13,7 +13,7 @@ const ReviewSection = ({ service }) => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        fetch(`http://localhost:5000/servicereviews/${service._id}`)
+        fetch(`https://hayday-server.vercel.app/servicereviews/${service._id}`)
             .then(res => res.json())
             .then(data => setReviews(data))
     }, [service._id, reviews]);
@@ -46,7 +46,7 @@ const ReviewSection = ({ service }) => {
             serviceName
         }
 
-        fetch(`http://localhost:5000/servicereviews/${service._id}`, {
+        fetch(`https://hayday-server.vercel.app/servicereviews/${service._id}`, {
             method: 'POST',
             headers: {
                 'content-type': 'application/json',

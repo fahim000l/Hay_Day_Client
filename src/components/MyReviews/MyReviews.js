@@ -1,17 +1,19 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useTitle } from 'react-use';
 import Swal from 'sweetalert2';
 import { AuthContext } from '../../contexts/AuthProvider';
 import ReviewRow from '../ServiceDetails/ReviewSection/ReviewRow/ReviewRow';
 
 const MyReviews = () => {
 
+    useTitle(`${document.title}-MyReviews`)
     const { user } = useContext(AuthContext);
     const [reviews, setReviews] = useState([]);
     const navigate = useNavigate();
 
     useEffect(() => {
-        fetch(`http://localhost:5000/reviews?email=${user?.email}`, {
+        fetch(`https://hayday-server.vercel.app/reviews?email=${user?.email}`, {
             headers: {
                 authorization: `Bearer ${localStorage.getItem('haydaytoken')}`
             }
@@ -24,7 +26,7 @@ const MyReviews = () => {
     }, [user?.email])
 
     const handleSingleDelete = (_id) => {
-        fetch(`http://localhost:5000/reviews/${_id}`, {
+        fetch(`https://hayday-server.vercel.app/reviews/${_id}`, {
             method: 'DELETE',
             headers: {
                 authorization: `Bearer ${localStorage.getItem('haydaytoken')}`
@@ -45,7 +47,7 @@ const MyReviews = () => {
         const confirmation = window.confirm('Are you sure? You want to delete all of your reviews!');
 
         if (confirmation) {
-            fetch(`http://localhost:5000/reviews?email=${user?.email}`, {
+            fetch(`https://hayday-server.vercel.app/reviews?email=${user?.email}`, {
                 method: 'DELETE',
                 headers: {
                     authorization: `Bearer ${localStorage.getItem('haydaytoken')}`
@@ -68,7 +70,7 @@ const MyReviews = () => {
             // setReviewUpdating(text)
             let updatingReview = reviews.find(rev => rev._id === _id);
             updatingReview.text = updatingtext;
-            fetch(`http://localhost:5000/reviews/${_id}`, {
+            fetch(`https://hayday-server.vercel.app/reviews/${_id}`, {
                 method: 'PUT',
                 headers: {
                     'content-type': 'application/json',

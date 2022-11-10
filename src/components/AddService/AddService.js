@@ -1,7 +1,9 @@
 import React from 'react';
+import { useTitle } from 'react-use';
 
 const AddService = () => {
 
+    useTitle(`${document.title}-AddService`)
     const handleSubmit = (event) => {
         event.preventDefault();
 
@@ -20,7 +22,7 @@ const AddService = () => {
             details
         }
 
-        fetch('http://localhost:5000/services', {
+        fetch('https://hayday-server.vercel.app/services', {
             method: 'POST',
             headers: {
                 'content-type': 'application/json',

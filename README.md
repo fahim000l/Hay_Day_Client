@@ -1,3 +1,37 @@
+Project Name : Mongo Crud Operation and JWT 
+Project Topic : Service website
+Live website Link : "https://hay-day-79076.web.app/"
+
+
+Functionalities of this react Application : 
+
+.This project contains frontend and backend.
+. In frontend I have used React Js.
+.In backend I have userd express Js.
+.This application contains email & password,  google and github signIn mathod.
+.It will auto rerender the page after signup.
+.User can add services and reviews.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
