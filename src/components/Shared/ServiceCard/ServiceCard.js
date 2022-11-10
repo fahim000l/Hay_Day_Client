@@ -11,7 +11,7 @@ const ServiceCard = ({ service }) => {
             <div>
                 <img className='w-full lg:h-[300px] h-[500px] rounded-lg' src={thumbnail} alt="" />
             </div>
-            <div className='text-start p-5'>
+            <div className='text-start p-5 h-[250px]'>
                 <h3 className='font-bold text-2xl truncate text-green-900'>{name}</h3>
                 <p>{details.length > 100 ? details.slice(0, 100) + '...' : details}</p>
                 <p className='my-5 text-xl font-bold'>Price : $<span className='text-yellow-900 font-bold'>{price}</span></p>

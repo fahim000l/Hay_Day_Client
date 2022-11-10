@@ -23,13 +23,15 @@ const AddService = () => {
         fetch('http://localhost:5000/services', {
             method: 'POST',
             headers: {
-                'content-type': 'application/json'
+                'content-type': 'application/json',
+                authorization: `Bearer ${localStorage.getItem('haydaytoken')}`
             },
             body: JSON.stringify(addingService)
         })
             .then(res => res.json())
             .then(data => {
-                console.log(data)
+                console.log(data);
+                form.reset();
             })
 
     }
