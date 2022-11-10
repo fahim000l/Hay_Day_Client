@@ -20,6 +20,7 @@ const Header = () => {
     const menu = <>
         <NavLink to="/" className={'btn btn-ghost font-bold'}>Home</NavLink>
         <NavLink to={'/services'} className={'btn btn-ghost font-bold'}>Services</NavLink>
+        <NavLink to={'/blog'} className={'btn btn-ghost font-bold'}>Blog</NavLink>
         {
             user?.uid ?
                 <>

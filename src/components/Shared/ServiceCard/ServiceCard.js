@@ -1,6 +1,8 @@
 import React from 'react';
 import { FaStar, FaStarHalf } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
+import { PhotoProvider, PhotoView } from 'react-photo-view';
+import 'react-photo-view/dist/react-photo-view.css';
 
 const ServiceCard = ({ service }) => {
     const navigate = useNavigate();
@@ -9,7 +11,11 @@ const ServiceCard = ({ service }) => {
     return (
         <div className='border-gray-200 shadow-lg shadow-green-500 border-2 border-solid rounded-lg'>
             <div>
-                <img className='w-full lg:h-[300px] h-[500px] rounded-lg' src={thumbnail} alt="" />
+                <PhotoProvider>
+                    <PhotoView src={thumbnail}>
+                        <img className='w-full cursor-pointer lg:h-[300px] h-[500px] rounded-lg' src={thumbnail} alt="" />
+                    </PhotoView>
+                </PhotoProvider>
             </div>
             <div className='text-start p-5 h-[250px]'>
                 <h3 className='font-bold text-2xl truncate text-green-900'>{name}</h3>

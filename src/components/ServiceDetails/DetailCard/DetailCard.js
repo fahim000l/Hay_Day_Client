@@ -1,5 +1,7 @@
 import React from 'react';
 import { FaStar, FaStarHalf } from 'react-icons/fa';
+import { PhotoProvider, PhotoView } from 'react-photo-view';
+import 'react-photo-view/dist/react-photo-view.css';
 
 const DetailCard = ({ service }) => {
 
@@ -7,7 +9,11 @@ const DetailCard = ({ service }) => {
     return (
         <div className='border-gray-200 my-10 shadow-lg shadow-green-500 border-2 border-solid rounded-lg'>
             <div>
-                <img className='w-full lg:h-[500px] h-[500px] rounded-lg' src={thumbnail} alt="" />
+                <PhotoProvider>
+                    <PhotoView src={thumbnail}>
+                        <img className='w-full cursor-pointer lg:h-[500px] h-[500px] rounded-lg' src={thumbnail} alt="" />
+                    </PhotoView>
+                </PhotoProvider>
             </div>
             <div className='p-5'>
                 <h3 className='font-bold text-5xl my-10 truncate text-green-900'>{name}</h3>
