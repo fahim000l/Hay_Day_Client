@@ -6,7 +6,7 @@ const ReviewRow = ({ review, handleSingleDelete, handleUpdate }) => {
 
     const location = useLocation();
 
-    const { email, image, name, rating, text, _id, serviceName } = review;
+    const { email, image, name, rating, text, _id, serviceName, date } = review;
 
     return (
         <tr>
@@ -43,7 +43,7 @@ const ReviewRow = ({ review, handleSingleDelete, handleUpdate }) => {
                 {serviceName}
             </td>
             <th>
-                <button className="btn btn-ghost btn-xs">date</button>
+                {date}
             </th>
             <th className={`${location.pathname === '/myreviews' ? 'block' : 'hidden'}`}>
                 <button onClick={() => handleUpdate(_id)} className="btn btn-ghost btn-xs">Update</button>
